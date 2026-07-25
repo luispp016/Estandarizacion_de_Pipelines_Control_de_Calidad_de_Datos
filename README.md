@@ -1,66 +1,66 @@
-# Estandarizacion de Pipelines y Control de Calidad de Datos
+# Estandarización de Pipelines y Control de Calidad de Datos
 
 **Luis Pinto**
-Especializacion en Ciencia de Datos
-Universidad Santo Tomas — Seminario de Grado II
+Especialización en Ciencia de Datos
+Universidad Santo Tomás — Seminario de Grado II
 
 ---
 
-## Introduccion
+## Introducción
 
-En proyectos de Machine Learning, la falta de estandarizacion en los flujos de trabajo dificulta la reproducibilidad y la validacion de resultados. Cuando las etapas de preparacion, validacion y entrenamiento se ejecutan de forma manual y aislada, se incrementa el riesgo de errores silenciosos, datos inconsistentes y resultados no replicables.
+En proyectos de Machine Learning, la falta de estandarización en los flujos de trabajo dificulta la reproducibilidad y la validación de resultados. Cuando las etapas de preparación, validación y entrenamiento se ejecutan de forma manual y aislada, se incrementa el riesgo de errores silenciosos, datos inconsistentes y resultados no replicables.
 
-Este proyecto aborda dicho problema implementando un **pipeline automatizado y reproducible** que ejecuta el flujo completo de entrenamiento y validacion de un modelo de clasificacion con un unico comando. Se utiliza el dataset **Iris** como caso de estudio, aplicando practicas de MLOps para garantizar trazabilidad, control de calidad y documentacion del proceso.
+Este proyecto aborda dicho problema implementando un **pipeline automatizado y reproducible** que ejecuta el flujo completo de entrenamiento y validación de un modelo de clasificación con un único comando. Se utiliza el dataset **Iris** como caso de estudio, aplicando prácticas de MLOps para garantizar trazabilidad, control de calidad y documentación del proceso.
 
-El objetivo es demostrar como la automatizacion y la validacion sistematica de datos mejoran la confiabilidad del pipeline y permiten que un tercero pueda reproducir el experimento de forma independiente.
+El objetivo es demostrar cómo la automatización y la validación sistemática de datos mejoran la confiabilidad del pipeline y permiten que un tercero pueda reproducir el experimento de forma independiente.
 
 ---
 
 ## Dataset
 
-Se utiliza el dataset **Iris** disponible en Scikit-Learn (`sklearn.datasets.load_iris`), uno de los conjuntos de datos de referencia en aprendizaje automatico.
+Se utiliza el dataset **Iris** disponible en Scikit-Learn (`sklearn.datasets.load_iris`), uno de los conjuntos de datos de referencia en aprendizaje automático.
 
-| Caracteristica        | Detalle                                      |
+| Característica        | Detalle                                      |
 |-----------------------|----------------------------------------------|
 | Fuente                | Fisher, 1936 (incluido en Scikit-Learn)      |
 | Registros totales     | 150                                          |
 | Variables predictoras | 4 (sepal_length, sepal_width, petal_length, petal_width) |
 | Variable objetivo     | species (0: setosa, 1: versicolor, 2: virginica) |
-| Tipo de problema      | Clasificacion multiclase                     |
+| Tipo de problema      | Clasificación multiclase                     |
 | Valores faltantes     | Ninguno                                      |
 
-La division de datos se realizo con `train_test_split` de forma estratificada (`stratify=species`) con una proporcion 80/20 y semilla fija (`random_state=42`) para garantizar reproducibilidad.
+La división de datos se realizó con `train_test_split` de forma estratificada (`stratify=species`) con una proporción 80/20 y semilla fija (`random_state=42`) para garantizar reproducibilidad.
 
 ---
 
-## Metodologia
+## Metodología
 
 ### Preprocesamiento
 
-El dataset Iris no requiere imputacion de valores faltantes ni codificacion de variables, ya que todas las caracteristicas son numericas y no contiene datos ausentes. Se estandarizaron los nombres de columnas a formato snake_case.
+El dataset Iris no requiere imputación de valores faltantes ni codificación de variables, ya que todas las características son numéricas y no contiene datos ausentes. Se estandarizaron los nombres de columnas a formato snake_case.
 
-### Validacion de calidad
+### Validación de calidad
 
-Antes del entrenamiento se ejecuta una validacion de datos sin utilizar librerias externas (solo modulos `csv` y `math` de la biblioteca estandar de Python). Las verificaciones realizadas son:
+Antes del entrenamiento se ejecuta una validación de datos sin utilizar librerías externas (solo módulos `csv` y `math` de la biblioteca estándar de Python). Las verificaciones realizadas son:
 
-| Validacion     | Descripcion                                                |
+| Validación     | Descripción                                                |
 |----------------|------------------------------------------------------------|
-| Tipos de datos | Verifica que los valores sean numericos validos            |
-| Valores nulos  | Comprueba ausencia de datos faltantes (None, NaN, vacio)   |
-| Rangos         | Verifica que los valores esten dentro de limites biologicos|
+| Tipos de datos | Verifica que los valores sean numéricos válidos            |
+| Valores nulos  | Comprueba ausencia de datos faltantes (None, NaN, vacío)   |
+| Rangos         | Verifica que los valores estén dentro de límites biológicos|
 | Dominio        | La variable species solo admite los valores 0, 1, 2       |
 | Columnas       | Verifica que existan todas las columnas esperadas          |
 
-Esta validacion se aplica tanto al conjunto de entrenamiento como al de prueba.
+Esta validación se aplica tanto al conjunto de entrenamiento como al de prueba.
 
 ### Modelo
 
-Se selecciono **RandomForestClassifier** de Scikit-Learn por las siguientes razones:
-- Maneja adecuadamente problemas de clasificacion multiclase sin configuracion adicional.
-- Es robusto frente a overfitting cuando se utiliza un numero suficiente de estimadores.
+Se seleccionó **RandomForestClassifier** de Scikit-Learn por las siguientes razones:
+- Maneja adecuadamente problemas de clasificación multiclase sin configuración adicional.
+- Es robusto frente a overfitting cuando se utiliza un número suficiente de estimadores.
 - No requiere escalamiento de variables.
 
-| Parametro      | Valor |
+| Parámetro      | Valor |
 |----------------|-------|
 | n_estimators   | 100   |
 | random_state   | 42    |
@@ -68,20 +68,20 @@ Se selecciono **RandomForestClassifier** de Scikit-Learn por las siguientes razo
 
 ### Registro de experimentos
 
-Los parametros y metricas de cada ejecucion se registran automaticamente en **MLflow**, utilizando almacenamiento local con SQLite (`mlflow.db`). Esto permite rastrear y comparar experimentos.
+Los parámetros y métricas de cada ejecución se registran automáticamente en **MLflow**, utilizando almacenamiento local con SQLite (`mlflow.db`). Esto permite rastrear y comparar experimentos.
 
 ---
 
-## Tecnologias
+## Tecnologías
 
-| Herramienta   | Version     | Proposito                          |
+| Herramienta   | Versión     | Propósito                          |
 |---------------|-------------|-------------------------------------|
 | Python        | 3.10+       | Lenguaje principal                  |
-| Scikit-Learn  | 1.9.x       | Entrenamiento y evaluacion          |
-| Pandas        | 2.x         | Manipulacion de datos               |
+| Scikit-Learn  | 1.9.x       | Entrenamiento y evaluación          |
+| Pandas        | 2.x         | Manipulación de datos               |
 | MLflow        | 3.x         | Registro de experimentos            |
 | Pytest        | 9.x         | Pruebas automatizadas               |
-| Joblib        | 1.x         | Serializacion del modelo            |
+| Joblib        | 1.x         | Serialización del modelo            |
 
 ---
 
@@ -99,8 +99,8 @@ Estandarizacion_de_Pipelines_Control_de_Calidad_de_Datos/
 │   └── model.pkl
 │
 ├── src/
-│   ├── prepare.py          # Carga y division del dataset
-│   ├── validate_data.py    # Validacion de calidad (sin librerias externas)
+│   ├── prepare.py          # Carga y división del dataset
+│   ├── validate_data.py    # Validación de calidad (sin librerías externas)
 │   └── train.py            # Entrenamiento y registro en MLflow
 │
 ├── tests/
@@ -108,7 +108,7 @@ Estandarizacion_de_Pipelines_Control_de_Calidad_de_Datos/
 │
 ├── data_contract.json      # Contrato de datos para inferencia
 ├── requirements.txt        # Dependencias del proyecto
-├── run_pipeline.py         # Script de automatizacion del pipeline
+├── run_pipeline.py         # Script de automatización del pipeline
 ├── mlflow.db               # Base de datos de experimentos MLflow
 └── README.md
 ```
@@ -143,16 +143,16 @@ pip install -r requirements.txt
 python run_pipeline.py
 ```
 
-Este comando ejecuta automaticamente las siguientes etapas:
+Este comando ejecuta automáticamente las siguientes etapas:
 
-1. **Preparacion de datos**: carga el dataset Iris y genera `train.csv` y `test.csv` en `data/processed/`.
-2. **Validacion de calidad**: verifica tipos, nulos, rangos y dominio sin librerias externas.
-3. **Entrenamiento**: entrena RandomForest y registra parametros y metricas en MLflow.
+1. **Preparación de datos**: carga el dataset Iris y genera `train.csv` y `test.csv` en `data/processed/`.
+2. **Validación de calidad**: verifica tipos, nulos, rangos y dominio sin librerías externas.
+3. **Entrenamiento**: entrena RandomForest y registra parámetros y métricas en MLflow.
 4. **Pruebas automatizadas**: ejecuta 8 tests con pytest para verificar la integridad del pipeline.
 
-Si alguna etapa falla, el pipeline se detiene automaticamente para evitar continuar con datos o resultados no validos.
+Si alguna etapa falla, el pipeline se detiene automáticamente para evitar continuar con datos o resultados no válidos.
 
-### 5. Ejecucion paso a paso (opcional)
+### 5. Ejecución paso a paso (opcional)
 
 ```powershell
 python src/prepare.py
@@ -163,7 +163,7 @@ python -m pytest tests/ -v
 
 ---
 
-## Visualizacion de experimentos con MLflow
+## Visualización de experimentos con MLflow
 
 En una terminal aparte (con el entorno activado):
 
@@ -173,20 +173,20 @@ mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
 
 Abrir en el navegador: `http://localhost:5000`
 
-Se visualiza el experimento `Iris_Pipeline_LuisPinto` con las metricas, parametros y el modelo registrado.
+Se visualiza el experimento `Iris_Pipeline_LuisPinto` con las métricas, parámetros y el modelo registrado.
 
 ---
 
 ## Resultados
 
-El modelo fue evaluado sobre el conjunto de prueba (30 registros, 20% del total) tras validacion cruzada estratificada.
+El modelo fue evaluado sobre el conjunto de prueba (30 registros, 20% del total) tras validación cruzada estratificada.
 
-| Metrica  | Valor  | Interpretacion                                         |
+| Métrica  | Valor  | Interpretación                                         |
 |----------|--------|--------------------------------------------------------|
 | Accuracy | 0.9000 | El modelo clasifica correctamente el 90% de las muestras |
-| F1-Score | 0.8997 | Equilibrio entre precision y recall (promedio ponderado)  |
+| F1-Score | 0.8997 | Equilibrio entre precisión y recall (promedio ponderado)  |
 
-Estos resultados son consistentes con el desempenio esperado de RandomForest sobre Iris. La precision es adecuada para un modelo base; mejoras futuras podrian incluir optimizacion de hiperparametros o evaluacion con validacion cruzada k-fold.
+Estos resultados son consistentes con el desempeño esperado de RandomForest sobre Iris. La precisión es adecuada para un modelo base; mejoras futuras podrían incluir optimización de hiperparámetros o evaluación con validación cruzada k-fold.
 
 ---
 
@@ -196,9 +196,9 @@ El archivo `data_contract.json` define las restricciones oficiales para la futur
 
 Incluye:
 - Tipos de datos esperados para cada variable
-- Rangos minimos y maximos permitidos (basados en la distribucion del dataset)
-- Un ejemplo de entrada valida
-- Un ejemplo de entrada invalida con las razones del rechazo
+- Rangos mínimos y máximos permitidos (basados en la distribución del dataset)
+- Un ejemplo de entrada válida
+- Un ejemplo de entrada inválida con las razones del rechazo
 
 ---
 
@@ -206,30 +206,30 @@ Incluye:
 
 Se implementaron 8 pruebas con pytest que verifican:
 
-| Prueba                         | Descripcion                                    |
+| Prueba                         | Descripción                                    |
 |--------------------------------|------------------------------------------------|
 | test_archivos_procesados_existen | Verifica que train.csv y test.csv existan     |
 | test_datasets_no_vacios        | Verifica que los archivos contengan registros  |
-| test_columnas_correctas        | Verifica que las columnas coincidan con el estandar |
+| test_columnas_correctas        | Verifica que las columnas coincidan con el estándar |
 | test_sin_valores_nulos         | Verifica ausencia de valores nulos             |
 | test_clases_validas            | Verifica que species contenga solo 0, 1 y 2   |
 | test_modelo_existe             | Verifica que model.pkl fue generado            |
-| test_modelo_carga_correctamente| Verifica que el modelo se puede cargar y tiene metodo predict |
+| test_modelo_carga_correctamente| Verifica que el modelo se puede cargar y tiene método predict |
 | test_accuracy_minima           | Verifica que el accuracy sea >= 0.80           |
 
 ---
 
 ## Limitaciones
 
-- El dataset Iris es relativamente simple (150 registros, 4 variables) y no representa la complejidad de un problema real de produccion.
-- No se realizo optimizacion de hiperparametros (GridSearch o RandomSearch).
-- La validacion se realizo con una unica particion train/test; una validacion cruzada k-fold proporcionaria una estimacion mas robusta.
-- El modelo no fue evaluado por subgrupos (por especie) para verificar desempenio uniforme entre clases.
+- El dataset Iris es relativamente simple (150 registros, 4 variables) y no representa la complejidad de un problema real de producción.
+- No se realizó optimización de hiperparámetros (GridSearch o RandomSearch).
+- La validación se realizó con una única partición train/test; una validación cruzada k-fold proporcionaría una estimación más robusta.
+- El modelo no fue evaluado por subgrupos (por especie) para verificar desempeño uniforme entre clases.
 
 ---
 
 ## Autor
 
 **Luis Pinto**
-Especializacion en Ciencia de Datos
-Universidad Santo Tomas
+Especialización en Ciencia de Datos
+Universidad Santo Tomás

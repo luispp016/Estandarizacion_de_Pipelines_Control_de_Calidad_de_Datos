@@ -1,7 +1,7 @@
 {
   "nombre_contrato": "Contrato de Datos - Modelo Iris",
   "version": "1.0.0",
-  "descripcion": "Define la estructura y restricciones de los datos de entrada para el modelo de clasificacion de especies Iris.",
+  "descripcion": "Define la estructura y restricciones de los datos de entrada para el modelo de clasificación de especies Iris.",
   "modelo": "RandomForestClassifier",
   "variable_objetivo": {
     "nombre": "species",
@@ -15,7 +15,7 @@
   },
   "variables_entrada": {
     "sepal_length": {
-      "descripcion": "Longitud del sepalo en centimetros",
+      "descripcion": "Longitud del sépalo en centímetros",
       "tipo": "number",
       "requerido": true,
       "nulo_permitido": false,
@@ -23,7 +23,7 @@
       "maximo": 8.0
     },
     "sepal_width": {
-      "descripcion": "Ancho del sepalo en centimetros",
+      "descripcion": "Ancho del sépalo en centímetros",
       "tipo": "number",
       "requerido": true,
       "nulo_permitido": false,
@@ -31,7 +31,7 @@
       "maximo": 4.5
     },
     "petal_length": {
-      "descripcion": "Longitud del petalo en centimetros",
+      "descripcion": "Longitud del pétalo en centímetros",
       "tipo": "number",
       "requerido": true,
       "nulo_permitido": false,
@@ -39,7 +39,7 @@
       "maximo": 7.0
     },
     "petal_width": {
-      "descripcion": "Ancho del petalo en centimetros",
+      "descripcion": "Ancho del pétalo en centímetros",
       "tipo": "number",
       "requerido": true,
       "nulo_permitido": false,
@@ -60,9 +60,9 @@
     "petal_width": -0.5
   },
   "razones_entrada_invalida": [
-    "sepal_length: no es un valor numerico",
+    "sepal_length: no es un valor numérico",
     "sepal_width: es un valor nulo",
-    "petal_length: supera el maximo permitido (7.0)",
-    "petal_width: esta por debajo del minimo permitido (0.1)"
+    "petal_length: supera el máximo permitido (7.0)",
+    "petal_width: está por debajo del mínimo permitido (0.1)"
   ]
 }
