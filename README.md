@@ -186,7 +186,7 @@ El modelo fue evaluado sobre el conjunto de prueba (30 registros, 20% del total)
 | Accuracy | 0.9000 | El modelo clasifica correctamente el 90% de las muestras |
 | F1-Score | 0.8997 | Equilibrio entre precision y recall (promedio ponderado)  |
 
-Estos resultados son consistentes con el desempe~o esperado de RandomForest sobre Iris. La precision es adecuada para un modelo base; mejoras futuras podrian incluir optimizacion de hiperparametros o evaluacion con validacion cruzada k-fold.
+Estos resultados son consistentes con el desempenio esperado de RandomForest sobre Iris. La precision es adecuada para un modelo base; mejoras futuras podrian incluir optimizacion de hiperparametros o evaluacion con validacion cruzada k-fold.
 
 ---
 
@@ -224,7 +224,7 @@ Se implementaron 8 pruebas con pytest que verifican:
 - El dataset Iris es relativamente simple (150 registros, 4 variables) y no representa la complejidad de un problema real de produccion.
 - No se realizo optimizacion de hiperparametros (GridSearch o RandomSearch).
 - La validacion se realizo con una unica particion train/test; una validacion cruzada k-fold proporcionaria una estimacion mas robusta.
-- El modelo no fue evaluado por subgrupos (por especie) para verificar desempe~o uniforme entre clases.
+- El modelo no fue evaluado por subgrupos (por especie) para verificar desempenio uniforme entre clases.
 
 ---
 
