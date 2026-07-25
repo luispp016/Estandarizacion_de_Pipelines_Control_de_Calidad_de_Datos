@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+mlflow.db
+mlruns/
+data/
+models/
+.pytest_cache/

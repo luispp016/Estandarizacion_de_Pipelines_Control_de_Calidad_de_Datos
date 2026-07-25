@@ -1,0 +1,68 @@
+{
+  "nombre_contrato": "Contrato de Datos - Modelo Iris",
+  "version": "1.0.0",
+  "descripcion": "Define la estructura y restricciones de los datos de entrada para el modelo de clasificacion de especies Iris.",
+  "modelo": "RandomForestClassifier",
+  "variable_objetivo": {
+    "nombre": "species",
+    "tipo": "integer",
+    "valores_permitidos": [0, 1, 2],
+    "etiquetas": {
+      "0": "setosa",
+      "1": "versicolor",
+      "2": "virginica"
+    }
+  },
+  "variables_entrada": {
+    "sepal_length": {
+      "descripcion": "Longitud del sepalo en centimetros",
+      "tipo": "number",
+      "requerido": true,
+      "nulo_permitido": false,
+      "minimo": 4.0,
+      "maximo": 8.0
+    },
+    "sepal_width": {
+      "descripcion": "Ancho del sepalo en centimetros",
+      "tipo": "number",
+      "requerido": true,
+      "nulo_permitido": false,
+      "minimo": 2.0,
+      "maximo": 4.5
+    },
+    "petal_length": {
+      "descripcion": "Longitud del petalo en centimetros",
+      "tipo": "number",
+      "requerido": true,
+      "nulo_permitido": false,
+      "minimo": 1.0,
+      "maximo": 7.0
+    },
+    "petal_width": {
+      "descripcion": "Ancho del petalo en centimetros",
+      "tipo": "number",
+      "requerido": true,
+      "nulo_permitido": false,
+      "minimo": 0.1,
+      "maximo": 2.5
+    }
+  },
+  "ejemplo_entrada_valida": {
+    "sepal_length": 5.1,
+    "sepal_width": 3.5,
+    "petal_length": 1.4,
+    "petal_width": 0.2
+  },
+  "ejemplo_entrada_invalida": {
+    "sepal_length": "abc",
+    "sepal_width": null,
+    "petal_length": 15.0,
+    "petal_width": -0.5
+  },
+  "razones_entrada_invalida": [
+    "sepal_length: no es un valor numerico",
+    "sepal_width: es un valor nulo",
+    "petal_length: supera el maximo permitido (7.0)",
+    "petal_width: esta por debajo del minimo permitido (0.1)"
+  ]
+}
